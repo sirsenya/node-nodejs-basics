@@ -2,10 +2,12 @@ import { Transform } from "stream";
 
 const transform = async () => {
   const reverseStr = new Transform({
-    transform(chunk) {
-      this.push(chunk.toString().split("").reverse().join(""));
+    transform(chunk, encoding, callback) {
+      const reversedString = chunk.toString().split("").reverse().join("");
+      callback(null, reversedString);
     },
   });
+
   process.stdin.pipe(reverseStr).pipe(process.stdout);
 };
 
